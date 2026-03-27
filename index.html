@@ -498,7 +498,7 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
 const DLOCS=['Bangalore','Vijaywada','Coimbatore','Kochi','Chennai','Hyderabad','Mysore','Mangalore','Madurai','Tirupati','Vizag','Trichy','Puducherry','Salem','Erode'];
 const DSKUS=['X20-0.25kg','X21-0.5kg','X22-1kg','X25-1.5kg','X26-2kg','X27-2.5kg','X28-3kg','20','21','22','25','26','27','28','30','31','32','35','40','50','FC01','FC02','FC03','FC04','FC05','FC06','FC07','FC08','FC09','FC10'];
 const LC={'Bangalore':'#6366f1','Vijaywada':'#10b981','Coimbatore':'#f59e0b','Kochi':'#ef4444','Chennai':'#3b82f6','Hyderabad':'#8b5cf6','Mysore':'#22c55e','Mangalore':'#f97316','Madurai':'#ec4899','Tirupati':'#14b8a6','Vizag':'#06b6d4','Trichy':'#f43f5e','Puducherry':'#eab308','Salem':'#84cc16','Erode':'#fb7185'};
-const PWA='https://script.google.com/macros/s/AKfycbzGNOWGbcF1kEuxuE2liMPKfI2_WcByIFN87DUMbwQToBop6tCRbBkaRXSBX1mCv2oziQ/exec';
+const PWA='https://script.google.com/macros/s/AKfycbwTDpCbBa2LvV8LKdB1fxMJ6fwQUX3OTj-14jLFDrOFsjuLBIDELGFr6dwIaIdFOPlJ/exec';
 const PID='1lQCBOomt_TYpSRQF6DfLI19_WZRuToVGxZYZaEa_YmU';
 
 // ── STATE ─────────────────────────────────────────────────────
@@ -507,7 +507,14 @@ let rows=[],locs=[],skus=[],cfg={},eid=null,nid=Date.now(),sK='date',sD=-1,autoT
 const ls=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}};
 const lss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
 
-function loadAll(){rows=ls('dt3_rows',[]);locs=ls('dt3_locs',DLOCS);skus=ls('dt3_skus',DSKUS);cfg=ls('dt3_cfg',{id:PID,wa:PWA,auto:false});}
+function loadAll(){
+  rows=ls('dt3_rows',[]);
+  locs=ls('dt3_locs',DLOCS);
+  skus=ls('dt3_skus',DSKUS);
+  cfg=ls('dt3_cfg',{id:PID,wa:PWA,auto:false});
+  // Always ensure the working URL is set — override stale saved config
+  if(!cfg.wa || cfg.wa !== PWA) { cfg.wa = PWA; cfg.id = PID; lss('dt3_cfg', cfg); }
+}
 function saveAll(){lss('dt3_rows',rows);lss('dt3_locs',locs);lss('dt3_skus',skus);lss('dt3_cfg',cfg);}
 
 // ── UTILS ─────────────────────────────────────────────────────
@@ -981,7 +988,7 @@ function expCSV(){
 
 
 // ── ADMIN / VIEW MODE ────────────────────────────────────────
-const ADMIN_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c3ba'; // SHA1 of 'admin' — CHANGE THIS
+const ADMIN_HASH = 'd033e22ae348aeb5660fc2140aec35850c4da997'; // SHA1('admin') — change via changeAdminPassword() in console // SHA1 of 'admin' — CHANGE THIS
 // To set your password: open browser console on the live page and run:
 // sha1('yourpassword') — or use https://tools.keycdn.com/sha1-online
 
@@ -1084,15 +1091,9 @@ if(cfg.wa)setSS('ok','Connected — click Pull to refresh');
 if(cfg.auto&&cfg.wa){document.getElementById('autotog').checked=true;['ac','ac2'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='inline-block';});autoTmr=setInterval(doPull,30000);}
 checkAdminSession();
 
-// AUTO-LOAD: If viewer (not admin) OR no local data, pull from Sheets automatically
+// AUTO-LOAD: Always pull fresh data from Sheets on every page load
 (async () => {
-  const hasData = rows.length > 0;
-  if (!hasData && cfg.wa) {
-    // No local data — pull from Sheets immediately
-    setSS('spin', 'Loading data from Google Sheets...');
-    await doPull();
-  } else if (!isAdmin && cfg.wa) {
-    // Viewer mode — always pull fresh data from Sheets on load
+  if (cfg.wa) {
     await doPull();
   }
 })();
