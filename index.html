@@ -963,6 +963,15 @@ function toggleAuto(){
   if(cfg.auto){toast('Auto-sync ON (30s)','g','✓ ');autoTmr=setInterval(doPull,30000);}
   else{toast('Auto-sync OFF','a');if(autoTmr){clearInterval(autoTmr);autoTmr=null;}}
 }
+
+// For viewers: always auto-refresh every 60s regardless of admin toggle
+let _viewerTimer = null;
+function startViewerAutoRefresh() {
+  if (_viewerTimer) clearInterval(_viewerTimer);
+  if (cfg.wa) {
+    _viewerTimer = setInterval(() => { if (!isAdmin) doPull(); }, 60000);
+  }
+}
 function expCSV(){
   const fr=getFiltered();const h='Location,Delivery Date,SKU Name,PO Qty,Dispatch Qty,Pending Qty,Remarks,Notes';
   const lines=fr.map(r=>[r.loc,r.date,r.sku,r.po,r.disp,r.po-r.disp,r.rem||'',r.notes||''].join(','));
@@ -993,6 +1002,7 @@ function checkAdminSession() {
 function setAdminMode(val, saveSession=true) {
   isAdmin = val;
   document.body.classList.toggle('view-mode', !val);
+  if (!val && typeof startViewerAutoRefresh === 'function') startViewerAutoRefresh();
   document.getElementById('modeBadge').textContent = val ? '⚙️ ADMIN MODE' : '👁 VIEW MODE';
   document.getElementById('modeBadge').className = 'ab-badge ' + (val ? 'ab-admin' : 'ab-view');
   document.getElementById('modeMsg').textContent = val 
@@ -1073,6 +1083,19 @@ popSelects();renderDash();restoreSync();
 if(cfg.wa)setSS('ok','Connected — click Pull to refresh');
 if(cfg.auto&&cfg.wa){document.getElementById('autotog').checked=true;['ac','ac2'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='inline-block';});autoTmr=setInterval(doPull,30000);}
 checkAdminSession();
+
+// AUTO-LOAD: If viewer (not admin) OR no local data, pull from Sheets automatically
+(async () => {
+  const hasData = rows.length > 0;
+  if (!hasData && cfg.wa) {
+    // No local data — pull from Sheets immediately
+    setSS('spin', 'Loading data from Google Sheets...');
+    await doPull();
+  } else if (!isAdmin && cfg.wa) {
+    // Viewer mode — always pull fresh data from Sheets on load
+    await doPull();
+  }
+})();
 </script>
 </body>
 </html>
