@@ -212,9 +212,85 @@ td.z{font-family:var(--fm);font-size:12px;color:var(--t3);text-align:right}
 @media(max-width:600px){.cards{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}.loc-grid{grid-template-columns:1fr}}
 input[type=date]::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+
+/* ── ADMIN / VIEW MODE ── */
+.admin-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;position:sticky;top:0;z-index:300;flex-wrap:wrap}
+.admin-bar .ab-left{display:flex;align-items:center;gap:8px}
+.admin-bar .ab-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
+.admin-bar .ab-admin{background:#10b981;color:#fff}
+.admin-bar .ab-view{background:#f59e0b;color:#fff}
+.admin-bar .ab-msg{color:#94a3b8;font-size:11px}
+.admin-bar .ab-btn{padding:5px 13px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.admin-bar .ab-btn:hover{background:rgba(255,255,255,.1)}
+.admin-bar .ab-btn.red{border-color:rgba(239,68,68,.5);color:#fca5a5}.admin-bar .ab-btn.red:hover{background:rgba(239,68,68,.15)}
+
+/* LOCK SCREEN */
+.lock-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.92);z-index:400;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.lock-overlay.show{display:flex}
+.lock-box{background:#fff;border-radius:16px;padding:36px 32px;width:380px;max-width:94vw;box-shadow:0 24px 64px rgba(0,0,0,.4);text-align:center}
+.lock-ico{font-size:40px;margin-bottom:12px}
+.lock-box h3{font-size:18px;font-weight:800;color:#0f172a;margin-bottom:6px}
+.lock-box p{font-size:13px;color:#64748b;margin-bottom:20px}
+.lock-box input{width:100%;padding:11px 14px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:15px;text-align:center;letter-spacing:4px;font-family:monospace;outline:none;transition:border-color .15s;margin-bottom:12px}
+.lock-box input:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+.lock-box .lock-btn{width:100%;padding:12px;background:#10b981;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s;margin-bottom:8px}
+.lock-box .lock-btn:hover{background:#059669}
+.lock-box .lock-err{color:#ef4444;font-size:12px;font-weight:600;min-height:16px;margin-bottom:8px}
+.lock-box .lock-view-btn{width:100%;padding:10px;background:transparent;border:1.5px solid #e2e8f0;color:#64748b;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.lock-box .lock-view-btn:hover{border-color:#94a3b8;color:#475569}
+
+/* VIEW MODE - hide edit controls */
+body.view-mode .btn.bb2,
+body.view-mode #tab-new,
+body.view-mode #tab-sync,
+body.view-mode #tab-settings,
+body.view-mode #cancel-btn,
+body.view-mode #sbtn,
+body.view-mode [onclick*="delEntry"],
+body.view-mode [onclick*="startEdit"],
+body.view-mode [onclick*="clearAll"],
+body.view-mode [onclick*="doPush"],
+body.view-mode [onclick*="addLoc"],
+body.view-mode [onclick*="addSku"],
+body.view-mode [onclick*="remLoc"],
+body.view-mode [onclick*="remSku"],
+body.view-mode .ti-row,
+body.view-mode #lsr,
+body.view-mode .sync-btns .br{display:none !important}
+body.view-mode .nr .bg{display:none !important}
+body.view-mode .srow .br{display:none !important}
+body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
+
 </style>
 </head>
 <body>
+
+
+<!-- ADMIN BAR -->
+<div class="admin-bar" id="adminBar">
+  <div class="ab-left">
+    <span class="ab-badge ab-view" id="modeBadge">👁 VIEW MODE</span>
+    <span class="ab-msg" id="modeMsg">Read-only — data updates automatically from Google Sheets</span>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span style="color:#475569;font-size:11px" id="adminEmail"></span>
+    <button class="ab-btn" onclick="showLock()" id="loginBtn">🔐 Admin Login</button>
+    <button class="ab-btn red" onclick="adminLogout()" id="logoutBtn" style="display:none">Logout</button>
+  </div>
+</div>
+
+<!-- LOCK SCREEN -->
+<div class="lock-overlay" id="lockOverlay">
+  <div class="lock-box">
+    <div class="lock-ico">🔐</div>
+    <h3>Admin Access</h3>
+    <p>Enter the admin password to edit dispatch data</p>
+    <input type="password" id="pwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryLogin()"/>
+    <div class="lock-err" id="pwErr"></div>
+    <button class="lock-btn" onclick="tryLogin()">Unlock Admin</button>
+    <button class="lock-view-btn" onclick="hideLock()">Continue as Viewer</button>
+  </div>
+</div>
 
 <nav>
   <div class="brand">
@@ -894,12 +970,109 @@ function expCSV(){
   a.download='dispatch_'+new Date().toISOString().slice(0,10)+'.csv';a.click();toast('CSV downloaded','g','✓ ');
 }
 
+
+// ── ADMIN / VIEW MODE ────────────────────────────────────────
+const ADMIN_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c3ba'; // SHA1 of 'admin' — CHANGE THIS
+// To set your password: open browser console on the live page and run:
+// sha1('yourpassword') — or use https://tools.keycdn.com/sha1-online
+
+// Simple hash function (not cryptographic but sufficient for this use case)
+async function sha1(str) {
+  const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+let isAdmin = false;
+
+function checkAdminSession() {
+  const stored = sessionStorage.getItem('dt_admin');
+  if (stored === 'true') setAdminMode(true, false);
+  else setViewMode();
+}
+
+function setAdminMode(val, saveSession=true) {
+  isAdmin = val;
+  document.body.classList.toggle('view-mode', !val);
+  document.getElementById('modeBadge').textContent = val ? '⚙️ ADMIN MODE' : '👁 VIEW MODE';
+  document.getElementById('modeBadge').className = 'ab-badge ' + (val ? 'ab-admin' : 'ab-view');
+  document.getElementById('modeMsg').textContent = val 
+    ? 'Full access — you can add, edit and push to Google Sheets'
+    : 'Read-only — data updates automatically from Google Sheets';
+  document.getElementById('loginBtn').style.display = val ? 'none' : 'inline-flex';
+  document.getElementById('logoutBtn').style.display = val ? 'inline-flex' : 'none';
+  if (saveSession) sessionStorage.setItem('dt_admin', val ? 'true' : 'false');
+  // Re-render to show/hide edit buttons
+  if (activeTab === 'entries') renderTable();
+  if (activeTab === 'locations') renderLocations();
+  if (activeTab === 'schedule') renderSchedule();
+  renderDash();
+}
+
+function setViewMode() { setAdminMode(false); }
+
+function showLock() {
+  document.getElementById('lockOverlay').classList.add('show');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwErr').textContent = '';
+  setTimeout(() => document.getElementById('pwInput').focus(), 100);
+}
+
+function hideLock() {
+  document.getElementById('lockOverlay').classList.remove('show');
+}
+
+async function tryLogin() {
+  const pw = document.getElementById('pwInput').value;
+  if (!pw) { document.getElementById('pwErr').textContent = 'Enter password'; return; }
+  const h = await sha1(pw);
+  const stored = localStorage.getItem('dt_admin_hash') || ADMIN_HASH;
+  if (h === stored) {
+    hideLock();
+    setAdminMode(true);
+    toast('Admin mode unlocked ✓', 'g', '⚙️ ');
+  } else {
+    document.getElementById('pwErr').textContent = '✕ Incorrect password';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function adminLogout() {
+  setAdminMode(false);
+  sessionStorage.removeItem('dt_admin');
+  toast('Logged out — viewer mode', 'a', '👁 ');
+}
+
+// Override submitEntry to check admin
+const _origSubmit = submitEntry;
+submitEntry = function() {
+  if (!isAdmin) { toast('Admin login required to edit', 'r', '🔐 '); showLock(); return; }
+  _origSubmit();
+};
+
+const _origDel = delEntry;
+delEntry = function(id) {
+  if (!isAdmin) { toast('Admin login required', 'r', '🔐 '); showLock(); return; }
+  _origDel(id);
+};
+
+// Change Admin Password utility
+function changeAdminPassword(newPw) {
+  sha1(newPw).then(h => {
+    localStorage.setItem('dt_admin_hash', h);
+    toast('Password updated ✓', 'g');
+    console.log('New hash stored:', h);
+  });
+}
+// Usage in console: changeAdminPassword('yourNewPassword')
+
 // ── INIT ──────────────────────────────────────────────────────
 loadAll();
 document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
 popSelects();renderDash();restoreSync();
 if(cfg.wa)setSS('ok','Connected — click Pull to refresh');
 if(cfg.auto&&cfg.wa){document.getElementById('autotog').checked=true;['ac','ac2'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='inline-block';});autoTmr=setInterval(doPull,30000);}
+checkAdminSession();
 </script>
 </body>
 </html>
