@@ -267,6 +267,74 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
 #scan-drop-zone.drag-over{border-color:var(--g);background:var(--gl);transform:scale(1.01)}
 .scan-row-check{width:16px;height:16px;accent-color:var(--g);cursor:pointer}
 
+
+/* ── STATUS BADGES ── */
+.st-done{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.st-pending{background:#fef3c7;color:#b45309;border:1px solid #fcd34d}
+.st-hold{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.st-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:none;transition:all .15s;font-family:var(--fn)}
+.st-btn:hover{opacity:.8;transform:scale(.97)}
+.st-btn.done{background:#dcfce7;color:#15803d}
+.st-btn.pend{background:#fef3c7;color:#b45309}
+.st-btn.hold{background:#fee2e2;color:#b91c1c}
+.st-btn.ach{background:#e0e7ff;color:#3730a3}
+
+/* ── ACHIEVED TAB ── */
+.ach-card{background:var(--w);border:1px solid var(--brd);border-radius:12px;padding:16px 18px;box-shadow:var(--sh);opacity:.85;transition:all .2s}
+.ach-card:hover{opacity:1;box-shadow:var(--sh2)}
+.ach-banner{background:linear-gradient(135deg,#4ade80,#22c55e);color:#fff;font-size:10px;font-weight:800;padding:2px 9px;border-radius:20px;letter-spacing:.5px}
+
+/* ── LOCATION STATUS PILL ── */
+.loc-status-row{display:flex;align-items:center;gap:6px;padding:8px 18px;border-top:1px solid var(--brd);background:var(--bg);flex-wrap:wrap}
+.loc-status-label{font-size:11px;font-weight:700;color:var(--t2);margin-right:4px}
+
+/* ── FILTER BAR ── */
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.fpill{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--brd);background:var(--w);color:var(--t2);transition:all .15s}
+.fpill:hover{border-color:var(--g);color:var(--g)}
+.fpill.active{background:var(--g);color:#fff;border-color:var(--g)}
+.fpill.f-done.active{background:#15803d;border-color:#15803d}
+.fpill.f-hold.active{background:#b91c1c;border-color:#b91c1c}
+.fpill.f-ach.active{background:#3730a3;border-color:#3730a3}
+
+/* hide zero-pending rows */
+.hide-zero-pend{display:none!important}
+
+
+/* ── LOCATION STATUS & ACHIEVED ── */
+.loc-status-bar{display:flex;gap:6px;padding:10px 18px;border-top:1px solid var(--brd);background:var(--bg);flex-wrap:wrap;align-items:center}
+.loc-status-btn{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all .18s;font-family:var(--fn)}
+.lsb-done{background:#dcfce7;color:#166534;border-color:#bbf7d0}.lsb-done.active,.lsb-done:hover{background:#16a34a;color:#fff;border-color:#16a34a}
+.lsb-pending{background:#fef3c7;color:#92400e;border-color:#fcd34d}.lsb-pending.active,.lsb-pending:hover{background:#d97706;color:#fff;border-color:#d97706}
+.lsb-hold{background:#fee2e2;color:#991b1b;border-color:#fca5a5}.lsb-hold.active,.lsb-hold:hover{background:#dc2626;color:#fff;border-color:#dc2626}
+.loc-card.status-done{border-color:#16a34a;opacity:.75}
+.loc-card.status-hold{border-color:#dc2626;opacity:.85}
+.loc-card.status-done .loc-hd{background:linear-gradient(135deg,#f0fdf4,#fff)}
+.loc-card.status-hold .loc-hd{background:linear-gradient(135deg,#fef2f2,#fff)}
+
+/* ACHIEVED SECTION */
+.achieved-section{margin-top:24px}
+.achieved-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;user-select:none}
+.achieved-hdr h3{font-size:14px;font-weight:700;color:var(--t2)}
+.achieved-toggle{font-size:18px;color:var(--t3);transition:transform .2s}
+.achieved-toggle.open{transform:rotate(180deg)}
+.achieved-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.achieved-card{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.achieved-card-left{display:flex;align-items:center;gap:10px}
+.achieved-icon{font-size:22px}
+.achieved-name{font-size:14px;font-weight:700;color:#166534}
+.achieved-sub{font-size:11px;color:#4ade80;margin-top:1px}
+.achieved-stats{text-align:right}
+.achieved-qty{font-size:16px;font-weight:800;font-family:var(--fm);color:#16a34a}
+.achieved-lbl{font-size:10px;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.6px}
+.achieved-undo{font-size:11px;font-weight:600;color:#64748b;cursor:pointer;padding:3px 8px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;transition:all .15s}
+.achieved-undo:hover{border-color:#dc2626;color:#dc2626}
+
+/* FILTER ZERO PENDING */
+.zero-hide{display:none!important}
+.show-zero-btn{font-size:11px;font-weight:600;color:var(--t3);cursor:pointer;padding:3px 10px;border-radius:20px;border:1px solid var(--brd);background:var(--bg);transition:all .15s;margin-left:auto}
+.show-zero-btn:hover{border-color:var(--g);color:var(--g)}
+
 </style>
 </head>
 <body>
@@ -328,6 +396,7 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
     <button class="tab" onclick="showTab('sync')" id="tab-sync">🔄 Sync</button>
     <button class="tab" onclick="showTab('settings')" id="tab-settings">⚙️ Settings</button>
     <button class="tab" onclick="showTab('scanner')" id="tab-scanner">📸 Scan Image</button>
+    <button class="tab" onclick="showTab('achieved')" id="tab-achieved">🏆 Achieved</button>
   </div>
 
   <!-- OVERVIEW -->
@@ -349,7 +418,13 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
   <div class="panel" id="panel-locations">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
       <div style="font-size:18px;font-weight:800;color:var(--t)">📍 Location Dashboard</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <select id="loc-status-filter" onchange="renderLocations()" style="padding:7px 10px;border:1.5px solid var(--brd2);border-radius:8px;font-size:12px;font-family:var(--fn);outline:none;color:var(--t)">
+          <option value="all">All Status</option>
+          <option value="pending">⏳ Pending</option>
+          <option value="hold">⏸ On Hold</option>
+          <option value="done">✓ Done</option>
+        </select>
         <select id="loc-filter-date" onchange="renderLocations()" style="padding:7px 10px;border:1.5px solid var(--brd2);border-radius:8px;font-size:12px;font-family:var(--fn);outline:none;color:var(--t)">
           <option value="">All Dates</option>
         </select>
@@ -373,6 +448,9 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
           <option>On time</option><option>Delay</option><option>Pending</option><option>Partial</option>
         </select>
         <button class="btn bo btn-sm" onclick="expCSV()">↓ Export CSV</button>
+        <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer">
+          <input type="checkbox" id="sched-show-zero" onchange="renderSchedule()" style="accent-color:var(--g)"/> Show completed
+        </label>
       </div>
     </div>
     <div class="schedule-wrap" id="sch-grid"></div>
@@ -419,6 +497,9 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
           <select id="fl-sku" onchange="renderTable()"><option value="">All SKUs</option></select>
           <select id="fl-st" onchange="renderTable()"><option value="">All status</option><option>On time</option><option>Delay</option><option>Pending</option><option>Partial</option></select>
           <input id="fl-q" placeholder="🔍 Search..." oninput="renderTable()" style="min-width:130px"/>
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;white-space:nowrap">
+            <input type="checkbox" id="fl-show-done" onchange="renderTable()" style="accent-color:var(--g)"/> Show completed
+          </label>
           <button class="btn bo btn-sm" onclick="expCSV()">↓ CSV</button>
         </div>
       </div>
@@ -554,6 +635,26 @@ body.view-mode .schip[onclick*="gotoSync"]{pointer-events:none;opacity:.6}
       </div>
     </div>
   </div>
+
+  <!-- ACHIEVED -->
+  <div class="panel" id="panel-achieved">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:18px;font-weight:800;color:var(--t)">🏆 Achieved</div>
+        <div style="font-size:12px;color:var(--t3);margin-top:2px">Locations marked as Done — fully dispatched</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <span class="cnt-badge" id="ach-cnt">0 achieved</span>
+        <button class="btn bo btn-sm" onclick="renderAchieved()">↺ Refresh</button>
+      </div>
+    </div>
+    <div id="ach-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
+    <div id="ach-empty" class="empty-s" style="display:none">
+      <div class="ei">🏆</div>
+      <div class="et">No achieved locations yet</div>
+      <p style="font-size:12px;margin-top:4px">Mark a location as <b>Done</b> in the Location Dashboard to see it here</p>
+    </div>
+  </div>
 </div><!-- /page -->
 
 <script>
@@ -569,6 +670,23 @@ let rows=[],locs=[],skus=[],cfg={},eid=null,nid=Date.now(),sK='date',sD=-1,autoT
 
 const ls=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}};
 const lss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+
+// Location status: 'pending'|'done'|'hold' per location name
+let locStatus = {};
+let showZeroPending = false;
+let achievedOpen = true;
+
+function loadLocStatus() { try { locStatus = JSON.parse(localStorage.getItem('dt3_locstatus') || '{}'); } catch(e) { locStatus = {}; } }
+function saveLocStatus() { localStorage.setItem('dt3_locstatus', JSON.stringify(locStatus)); }
+
+function setLocStatus(loc, status) {
+  if (!isAdmin) { toast('Admin login required', 'r', '🔐 '); showLock(); return; }
+  if (locStatus[loc] === status) { delete locStatus[loc]; }  // toggle off
+  else { locStatus[loc] = status; }
+  saveLocStatus();
+  renderLocations();
+  if (status === 'done') toast(loc + ' moved to Achieved ✓', 'g', '✅ ');
+}
 
 function loadAll(){
   rows=ls('dt3_rows',[]);
@@ -701,7 +819,10 @@ function getFiltered(){
   const sku=document.getElementById('fl-sku')?.value||'';
   const st=document.getElementById('fl-st')?.value||'';
   const q=(document.getElementById('fl-q')?.value||'').toLowerCase();
+  // Hide zero-pending by default
+  const showDone = document.getElementById('fl-show-done')?.checked;
   let out=rows.filter(r=>{
+  if(!showDone && r.pend<=0) return false;
     if(loc&&r.loc!==loc)return false;
     if(sku&&r.sku!==sku)return false;
     if(st&&r.rem!==st)return false;
@@ -818,30 +939,47 @@ function renderDash(){
 // ── RENDER LOCATIONS ──────────────────────────────────────────
 function renderLocations(){
   popSelects();
-  // build date filter
   const dates=[...new Set(rows.map(r=>r.date))].sort();
   const lfd=document.getElementById('loc-filter-date');
-  const cv=lfd.value;
-  lfd.innerHTML='<option value="">All Dates</option>'+dates.map(d=>`<option${d===cv?' selected':''}>${d}</option>`).join('');
-  const filterDate=lfd.value;
+  if(lfd){const cv=lfd.value;lfd.innerHTML='<option value="">All Dates</option>'+dates.map(d=>`<option${d===cv?' selected':''}>${d}</option>`).join('');}
+  const filterDate=lfd?.value||'';
 
   const activeRows=filterDate?rows.filter(r=>r.date===filterDate):rows;
-  const locSet=[...new Set(activeRows.map(r=>r.loc))].sort();
-  const grid=document.getElementById('loc-grid');
-  if(!locSet.length){grid.innerHTML='<div class="empty-s" style="grid-column:1/-1"><div class="ei">📍</div><div class="et">No location data yet</div></div>';return;}
 
-  grid.innerHTML=locSet.map(loc=>{
+  // Split locations: active vs achieved(done)
+  const locSet=[...new Set(activeRows.map(r=>r.loc))].sort();
+  const activeLocs  = locSet.filter(l => locStatus[l] !== 'done');
+  const achievedLocs= locSet.filter(l => locStatus[l] === 'done');
+
+  const grid=document.getElementById('loc-grid');
+  if(!locSet.length){
+    grid.innerHTML='<div class="empty-s" style="grid-column:1/-1"><div class="ei">📍</div><div class="et">No location data yet</div></div>';
+    // clear achieved section
+    const as = document.getElementById('achieved-section');
+    if(as) as.style.display='none';
+    return;
+  }
+
+  // ── ACTIVE LOCATION CARDS ──────────────────────────────────────────────
+  grid.innerHTML = activeLocs.map(loc => {
     const lr=activeRows.filter(r=>r.loc===loc);
     const tp=lr.reduce((s,r)=>s+r.po,0),td=lr.reduce((s,r)=>s+r.disp,0),tpend=tp-td;
     const pp=pct(td,tp),c=lc(loc);
+    const st=locStatus[loc]||'pending';
+    // SKU rows — HIDE zero pending
     const skuRows=lr.sort((a,b)=>b.po-a.po);
+    const nonZeroSkus=skuRows.filter(r=>r.pend>0);
+    const zeroSkus   =skuRows.filter(r=>r.pend<=0);
     const mxPo=Math.max(...skuRows.map(r=>r.po),1);
-    const statusCnt={};lr.forEach(r=>{if(r.rem)statusCnt[r.rem]=(statusCnt[r.rem]||0)+1;});
-    const badgeHtml=Object.entries(statusCnt).slice(0,3).map(([s,c2])=>`<span class="badge ${bc(s)}" style="font-size:10px;padding:2px 7px">${s} ${c2}</span>`).join(' ');
-    return `<div class="loc-card" id="lcard-${loc.replace(/\s/g,'_')}" onclick="toggleLoc('${loc.replace(/\s/g,'_')}')">
+    const delays=lr.filter(r=>r.rem==='Delay').length;
+
+    return `<div class="loc-card${st==='done'?' status-done':st==='hold'?' status-hold':''}" id="lcard-${loc.replace(/\s/g,'_')}">
       <div class="loc-hd">
         <div class="loc-name"><span class="ldot" style="background:${c};width:10px;height:10px"></span>${loc}</div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">${badgeHtml}<span style="font-size:18px;color:var(--t3)" id="lcarrow-${loc.replace(/\s/g,'_')}">▾</span></div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          ${delays>0?`<span class="badge bdl" style="font-size:10px">${delays} delay${delays>1?'s':''}</span>`:''}
+          <span style="font-size:18px;color:var(--t3);cursor:pointer" id="lcarrow-${loc.replace(/\s/g,'_')}" onclick="toggleLoc('${loc.replace(/\s/g,'_')}')">▾</span>
+        </div>
       </div>
       <div class="loc-stats">
         <div class="ls"><div class="ls-val" style="color:var(--g)">${fmt(tp)}</div><div class="ls-lbl">PO Qty</div></div>
@@ -850,33 +988,103 @@ function renderLocations(){
       </div>
       <div class="loc-prog-wrap">
         <div class="loc-prog-label">
-          <span style="font-size:11px;font-weight:600;color:var(--t2)">${lr.length} SKU line${lr.length!==1?'s':''}</span>
+          <span style="font-size:11px;font-weight:600;color:var(--t2)">${nonZeroSkus.length} pending SKU${nonZeroSkus.length!==1?'s':''}${zeroSkus.length>0?` · ${zeroSkus.length} completed`:''}</span>
           <span style="font-size:11px;font-weight:700;color:${c}">${pp}% dispatched</span>
         </div>
         <div class="loc-prog-bar"><div class="loc-prog-fill" style="width:${pp}%;background:${c}"></div></div>
       </div>
-      <div class="loc-detail" id="ldetail-${loc.replace(/\s/g,'_')}">
-        <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">SKU Breakdown</div>
-        ${skuRows.map(r=>{const rp=pct(r.disp,r.po),bw=Math.round(r.po/mxPo*100);return`
-          <div class="loc-sku-row">
-            <div><span class="sku-t">${r.sku}</span></div>
-            <div class="loc-sku-bar"><div class="loc-sku-fill" style="width:${bw}%;background:${c};opacity:.3"></div></div>
-            <div style="font-size:11px;color:var(--t2);white-space:nowrap">${r.date||'—'}</div>
-            <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:var(--t2)">${fmt(r.po)}</div>
-            <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:${r.disp>0?'var(--g)':'var(--t3)'}">${r.disp>0?fmt(r.disp):'—'}</div>
-            <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;font-weight:700;color:${r.pend>0?'var(--a)':'var(--t3)'}">${r.pend>0?fmt(r.pend):'✓'}</div>
-            <div style="margin-left:8px">${r.rem?`<span class="badge ${bc(r.rem)}" style="font-size:10px;padding:2px 6px">${r.rem}</span>`:''}</div>
-            <div style="display:flex;gap:3px;margin-left:6px">
-              <button class="btn bo btn-xs btn-ic" onclick="event.stopPropagation();startEdit(${r.id})" style="color:var(--b);padding:3px 6px">✎</button>
-            </div>
-          </div>`;}).join('')}
-        <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn bg btn-sm" onclick="event.stopPropagation();prefillNewEntry('${loc}')">＋ Add SKU for ${loc}</button>
+      <div class="loc-detail" id="ldetail-${loc.replace(/\s/g,'_')}" style="display:none">
+        <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+          <span>SKU Breakdown</span>
+          ${zeroSkus.length>0?`<span class="show-zero-btn" onclick="toggleZeroRows('${loc.replace(/\s/g,'_')}',this)" data-open="false">Show ${zeroSkus.length} completed</span>`:''}
         </div>
+        ${nonZeroSkus.map(r=>{const rp=pct(r.disp,r.po),bw=Math.round(r.po/mxPo*100);return`
+        <div class="loc-sku-row">
+          <div><span class="sku-t">${r.sku}</span></div>
+          <div class="loc-sku-bar" style="flex:1;margin:0 10px;height:5px;background:var(--brd);border-radius:3px;overflow:hidden"><div class="loc-sku-fill" style="height:100%;width:${bw}%;background:${c};opacity:.4"></div></div>
+          <div style="font-size:11px;color:var(--t2);white-space:nowrap">${r.date||'—'}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:var(--t2)">${fmt(r.po)}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:${r.disp>0?'var(--g)':'var(--t3)'}">${r.disp>0?fmt(r.disp):'—'}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;font-weight:700;color:${r.pend>0?'var(--a)':'var(--t3)'}">${r.pend>0?fmt(r.pend):'✓'}</div>
+          <div style="margin-left:6px">${r.rem?`<span class="badge ${bc(r.rem)}" style="font-size:10px;padding:2px 6px">${r.rem}</span>`:''}</div>
+          <div style="display:flex;gap:3px;margin-left:6px"><button class="btn bo btn-xs btn-ic" onclick="event.stopPropagation();startEdit(${r.id})" style="color:var(--b);padding:3px 6px">✎</button></div>
+        </div>`}).join('')}
+        ${zeroSkus.map(r=>`
+        <div class="loc-sku-row zero-row-${loc.replace(/\s/g,'_')}" style="display:none;opacity:.5">
+          <div><span class="sku-t" style="background:#dcfce7;color:#166534">${r.sku}</span></div>
+          <div style="flex:1;margin:0 10px"></div>
+          <div style="font-size:11px;color:var(--t2);white-space:nowrap">${r.date||'—'}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:var(--t2)">${fmt(r.po)}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;color:var(--g)">${fmt(r.disp)}</div>
+          <div style="font-size:11px;font-family:var(--fm);text-align:right;min-width:50px;font-weight:700;color:var(--g)">✓ Done</div>
+          <div></div><div></div>
+        </div>`).join('')}
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn bg btn-sm" onclick="event.stopPropagation();prefillNewEntry('${loc}')">＋ Add SKU</button>
+        </div>
+      </div>
+      <!-- STATUS BAR -->
+      <div class="loc-status-bar">
+        <span style="font-size:11px;font-weight:600;color:var(--t3)">Status:</span>
+        <button class="loc-status-btn lsb-pending${st==='pending'?' active':''}" onclick="event.stopPropagation();setLocStatus('${loc}','pending')">⏳ Pending</button>
+        <button class="loc-status-btn lsb-hold${st==='hold'?' active':''}" onclick="event.stopPropagation();setLocStatus('${loc}','hold')">⏸ Hold</button>
+        <button class="loc-status-btn lsb-done${st==='done'?' active':''}" onclick="event.stopPropagation();setLocStatus('${loc}','done')">✅ Done → Achieved</button>
       </div>
     </div>`;
   }).join('');
+
+  // ── ACHIEVED SECTION ───────────────────────────────────────────────────
+  let achSection = document.getElementById('achieved-section');
+  if (!achSection) {
+    achSection = document.createElement('div');
+    achSection.id = 'achieved-section';
+    achSection.className = 'achieved-section';
+    document.getElementById('loc-grid').after(achSection);
+  }
+
+  if (!achievedLocs.length) { achSection.style.display='none'; return; }
+  achSection.style.display = 'block';
+
+  const achCards = achievedLocs.map(loc => {
+    const lr=activeRows.filter(r=>r.loc===loc);
+    const tp=lr.reduce((s,r)=>s+r.po,0),td=lr.reduce((s,r)=>s+r.disp,0);
+    const c=lc(loc);
+    return `<div class="achieved-card">
+      <div class="achieved-card-left">
+        <div class="achieved-icon">🏆</div>
+        <div>
+          <div class="achieved-name" style="color:#166534"><span class="ldot" style="background:${c};width:8px;height:8px;display:inline-block;border-radius:50%;margin-right:5px"></span>${loc}</div>
+          <div class="achieved-sub">${lr.length} SKU line${lr.length!==1?'s':''} · 100% complete</div>
+        </div>
+      </div>
+      <div class="achieved-stats">
+        <div class="achieved-qty">${fmt(tp)}</div>
+        <div class="achieved-lbl">Total Dispatched</div>
+        <button class="achieved-undo" onclick="setLocStatus('${loc}','done')" title="Move back to active">↩ Undo</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  achSection.innerHTML = `
+    <div class="achieved-hdr" onclick="document.getElementById('ach-grid').style.display=achievedOpen?'none':'grid';achievedOpen=!achievedOpen;this.querySelector('.achieved-toggle').classList.toggle('open',achievedOpen)">
+      <span style="font-size:20px">🏆</span>
+      <h3>Achieved (${achievedLocs.length})</h3>
+      <span class="achieved-toggle open">▾</span>
+    </div>
+    <div class="achieved-grid" id="ach-grid">${achCards}</div>
+  `;
 }
+
+function toggleZeroRows(key, btn) {
+  const isOpen = btn.dataset.open === 'true';
+  document.querySelectorAll('.zero-row-' + key).forEach(el => {
+    el.style.display = isOpen ? 'none' : 'flex';
+  });
+  btn.dataset.open = isOpen ? 'false' : 'true';
+  const cnt = btn.textContent.match(/\d+/)?.[0] || '';
+  btn.textContent = isOpen ? `Show ${cnt} completed` : `Hide ${cnt} completed`;
+}
+
 
 function toggleLoc(key){
   const card=document.getElementById('lcard-'+key);
@@ -905,6 +1113,9 @@ function renderSchedule(){
   let activeRows=rows;
   if(fLoc)activeRows=activeRows.filter(r=>r.loc===fLoc);
   if(fSt)activeRows=activeRows.filter(r=>r.rem===fSt);
+  // Hide zero-pending by default (show only lines with pending qty > 0)
+  const showZero = document.getElementById('sched-show-zero')?.checked;
+  if(!showZero) activeRows=activeRows.filter(r=>r.pend>0);
 
   // Group by location+date
   const groups={};
@@ -1366,8 +1577,93 @@ async function autoPush() {
   } catch(e) {}
 }
 
+
+// ── LOCATION STATUS ────────────────────────────────────────────
+function setLocStatus(loc, status) {
+  const prev = localStorage.getItem('loc_status_'+loc) || 'pending';
+  localStorage.setItem('loc_status_'+loc, status);
+
+  const statusMsg = {done:'✓ Marked Done', pending:'⏳ Set to Pending', hold:'⏸ Put on Hold'};
+  toast(loc + ': ' + statusMsg[status], status==='done'?'g':status==='hold'?'r':'a', '');
+
+  // If done, also mark all entries for this location
+  if(status === 'done') {
+    rows.forEach(r => { if(r.loc===loc && !r.rem) r.rem='On time'; });
+    saveAll();
+    if(cfg.wa) autoPush();
+  }
+
+  renderLocations();
+  if(activeTab==='achieved') renderAchieved();
+}
+
+function renderAchieved() {
+  const grid = document.getElementById('ach-grid');
+  const empty = document.getElementById('ach-empty');
+  const cnt = document.getElementById('ach-cnt');
+  if(!grid) return;
+
+  // Find all locations marked as done
+  const allLocs = [...new Set(rows.map(r=>r.loc))].sort();
+  const doneLocs = allLocs.filter(l => localStorage.getItem('loc_status_'+l)==='done');
+
+  cnt.textContent = doneLocs.length + ' achieved';
+  if(!doneLocs.length){grid.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  grid.innerHTML = doneLocs.map(loc=>{
+    const lr = rows.filter(r=>r.loc===loc);
+    const tp = lr.reduce((s,r)=>s+r.po,0);
+    const td = lr.reduce((s,r)=>s+r.disp,0);
+    const pp = pct(td,tp);
+    const c  = lc(loc);
+    const dates = [...new Set(lr.map(r=>r.date))].sort();
+
+    return `<div class="ach-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="ldot" style="background:${c};width:12px;height:12px"></span>
+          <span style="font-size:15px;font-weight:700">${loc}</span>
+        </div>
+        <span class="ach-banner">✓ DONE</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+        <div style="text-align:center;padding:8px;background:var(--gl);border-radius:8px">
+          <div style="font-size:16px;font-weight:800;font-family:var(--fm);color:var(--g)">${fmt(td)}</div>
+          <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase">Dispatched</div>
+        </div>
+        <div style="text-align:center;padding:8px;background:var(--bg);border-radius:8px">
+          <div style="font-size:16px;font-weight:800;font-family:var(--fm)">${fmt(tp)}</div>
+          <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase">Total PO</div>
+        </div>
+        <div style="text-align:center;padding:8px;background:var(--bl);border-radius:8px">
+          <div style="font-size:16px;font-weight:800;font-family:var(--fm);color:var(--b)">${pp}%</div>
+          <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase">Fulfilled</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--t3);margin-bottom:10px">
+        ${lr.length} SKU lines · ${dates.length} delivery date${dates.length!==1?'s':''} · ${dates[0]||'—'}
+      </div>
+      <div style="height:4px;background:var(--brd);border-radius:2px;overflow:hidden;margin-bottom:12px">
+        <div style="height:100%;width:${pp}%;background:${c};border-radius:2px"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn bo btn-sm" onclick="setLocStatus('${loc}','pending')" style="flex:1;font-size:11px">↩ Move Back to Pending</button>
+        <button class="btn bo btn-sm" onclick="showTab('locations')" style="font-size:11px">📍 View</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Override showTab to init achieved
+const _origShowTab = showTab;
+showTab = function(name) {
+  _origShowTab(name);
+  if(name==='achieved') renderAchieved();
+};
+
 // ── INIT ──────────────────────────────────────────────────────
-loadAll();
+loadAll(); loadLocStatus();
 document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
 popSelects();renderDash();restoreSync();
 if(cfg.wa)setSS('ok','Connected — click Pull to refresh');
